@@ -1,12 +1,18 @@
+import React from 'react';
 import { useParams } from "react-router-dom";
 import { invoiceData } from "../data/invoiceData";
 import getIsoDateFormat from "../utils/getIsoDateFormat";
 export default function InvoiceDetail() {
   const { slug } = useParams();
-  const queryInvoice = invoiceData.find((invoice) => invoice.number == +slug);
+
+  const queryInvoice = React.useMemo(() => {
+    return invoiceData.find((invoice) => invoice.number == +slug);
+  }, [slug])
+
   if (!queryInvoice) {
     return <div> Not found!!!!</div>;
   }
+
   return (
     <>
       <p className="text-3xl decoration-4 ">
